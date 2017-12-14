@@ -1,0 +1,14 @@
+[Unit]
+Description="Trigger for coreos-cryptagent service"
+DefaultDependencies=false
+
+# Order before crypto volumes
+Before=initrd-setup-boot.service basic.target cryptsetup.target
+
+# Requires network and DNS
+Requires=systemd-networkd.service systemd-resolved.service network-online.target
+After=systemd-networkd.service systemd-resolved.service network-online.target
+
+[Path]
+PathExists=/boot/etc/coreos-cryptagent/
+Unit=coreos-cryptagent.service
